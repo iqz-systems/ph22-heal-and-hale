@@ -1,0 +1,85 @@
+.domain-title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+li {
+    border-radius: 1.5rem;
+    border-bottom: 5px solid #47AEFF;
+    padding: 2rem;
+    background-color: #131E2F;
+    height: 100%;
+}
+
+li p {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.card-grid {
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: repeat(6, 1fr);
+    max-width: 80%;
+    margin: auto;
+}
+
+.image-container {
+    width: fit-content;
+    margin: auto;
+    height: 130px;
+}
+.hidden{
+    visibility: hidden;
+}
+
+@media only screen and (min-width: 750px) and (max-width: 1300px) {
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .card-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+// 
+// .bottomright {
+//     position: fixed;
+//     bottom: 8px;
+//     right: 16px;
+//     height: 90px;
+//     width: 117px;
+//     font-size: 18px;
+//     background-size: contain;
+//     background-position: 50%;
+//     // background: url(/images/bluebird-logo.png);
+//     background-repeat: no-repeat;
+//   }
+
+.hackRegContainer {
+    width: 60%;
+    margin: 0 auto;
+    color: #333333;
+    h2 {
+        color: #005BBA;
+        font-size: 36px;
+        font-family: 'Poppins';
+        font-weight: bold;
+    }
+    .termsContent {
+        margin: 20px 0;
+    }
+    .termsTitle {
+        color: #005BBA;
+        font-size: 24px;
+        font-family: 'Poppins';
+        font-weight: 500;
+    }
+}
+.registerBtn {
+    background-color: #005BBA !important;
+    width: 100%;
+}

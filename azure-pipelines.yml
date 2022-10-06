@@ -1,0 +1,202 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+      - master
+
+resources:
+  - repo: self
+
+pool:
+  vmImage: "ubuntu-20.04"
+
+name: $(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
+
+variables:
+  - name: RepositoryName
+    value: "us.gcr.io"
+  - name: DockerImageName
+    value: "iqz-apps/iqz-plus"
+  - name: "tf_backend_bucket"
+    value: "iqz-apps"
+  - name: "tf_backend_prefix"
+    value: "iqz-plus"
+  - name: envrionment
+    value: "iqz-plus"
+
+# This is what we want to do:
+# 1. Build and push a Docker image for the app to GCR.
+# 2. Plan terraform deployment.
+# 3. Wait for plan approval.
+# 4. Apply "planned" TF plan to infrastructure.
+stages:
+  # In this stage we create the Docker image and the terraform plan.
+  - stage: plan_stage
+    displayName: Plan stage
+    jobs:
+      - job: build_docker_image
+        displayName: "Build and push Docker image to GCR"
+        steps:
+          # Connect to the Docker registry via service connection.
+          - task: Docker@2
+            displayName: "Login to Docker registry"
+            inputs:
+              containerRegistry: "iqz-apps-container-registry"
+              command: "login"
+          # Build the image
+          - task: Docker@2
+            displayName: "Build docker image"
+            inputs:
+              containerRegistry: "iqz-apps-container-registry"
+              repository: "$(DockerImageName)"
+              command: "build"
+              Dockerfile: "**/Dockerfile"
+              tags: |
+                $(Build.BuildId)
+          # Push to the registry.
+          - task: Docker@2
+            displayName: "Push image"
+            inputs:
+              containerRegistry: "iqz-apps-container-registry"
+              repository: "$(DockerImageName)"
+              command: "push"
+              Dockerfile: "**/Dockerfile"
+              tags: |
+                $(Build.BuildId)
+
+      # Here we "create" the deployment plan. We don't make any changes to the infrastructure here.
+      # Rather, we just "plan" out the changes and prepare for approval. Post approval, the created
+      # plan will be "applied" to modify the infrastructure.
+      - job: create_tf_plan
+        dependsOn: "build_docker_image"
+        condition: succeeded()
+        displayName: Plan out terraform deployment
+        workspace:
+          clean: all
+        steps:
+          - checkout: self
+            displayName: "Checkout source"
+
+          # This is the service account key which is used to authenticate both - the Terraform backend
+          # as Google Cloud Storage (GCS) and also the Google provider in Terraform.
+          - task: DownloadSecureFile@1
+            name: authkey
+            displayName: "Download service account file to authenticate to google cloud"
+            inputs:
+              secureFile: "iqz-terraform-azure-devops.json"
+              retryCount: "2"
+
+          # Install Terraform v1.0.9
+          - task: TerraformInstaller@0
+            displayName: "Install Terraform"
+            inputs:
+              terraformVersion: "1.0.9"
+          # We are specifying the GOOGLE_CREDENTIALS environment variable with the path to the downloaded
+          # service account JSON key file. This will be used by both the GCS backend for Terraform as well
+          # as the Google provider in the Terraform files. If we wish to specify a different service
+          # account for the GCS backend and the Google provider, we must use GOOGLE_BACKEND_CREDENTIALS for
+          # the backend and GOOGLE_APPLICATION_CREDENTIALS for the provider.
+          #
+          # During init, only the backend is initialized.
+          - script: |
+              terraform init \
+              -backend-config=bucket=$BACKEND_BUCKET \
+              -backend-config=prefix=$BACKEND_PREFIX \
+              -backend-config=credentials=$GOOGLE_CREDENTIALS
+            displayName: "Terraform - init"
+            workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+            env:
+              BACKEND_BUCKET: $(tf_backend_bucket)
+              BACKEND_PREFIX: $(tf_backend_prefix)
+              GOOGLE_CREDENTIALS: $(authkey.secureFilePath)
+          # Create the Terraform plan in an output file "tfplan".
+          #
+          # During plan, the Google provider will be initialized.
+          - script: |
+              terraform plan \
+              -var deployment_image_name=$DEPLOYMENT_IMAGE_NAME \
+              -out tfplan
+            displayName: "Terraform - plan"
+            workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+            env:
+              GOOGLE_CREDENTIALS: $(authkey.secureFilePath)
+              DEPLOYMENT_IMAGE_NAME: $(RepositoryName)/$(DockerImageName):$(Build.BuildId)
+          # Publish the generated plan so we can "apply" it after approval.
+          - task: PublishPipelineArtifact@1
+            displayName: "Publish deploy plan"
+            inputs:
+              targetPath: $(Build.SourcesDirectory)/terraform
+              artifact: "deployment-plan"
+              publishLocation: "pipeline"
+
+  # This is the stage where we actually "apply" any changes to the infrastructure.
+  # We download all the Terraform plan and "apply" the generated plan. We DO NOT
+  # create a new plan here. This ensures we "apply" only what was approved.
+  - stage: "deploy_stage"
+    displayName: "Deploy"
+    dependsOn: "plan_stage"
+    condition: succeeded()
+    jobs:
+      - deployment: "deploy_site"
+        displayName: "Deploy site"
+        environment: $(envrionment)
+        workspace:
+          clean: all
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                # Deployment job auto downloads source code. Disable it so we have more control over the
+                # download.
+                - download: none
+                # Download the source code in to the workspace.
+                - checkout: self
+                  displayName: "Checkout source"
+                # Download the deployment plan.
+                - task: DownloadPipelineArtifact@2
+                  displayName: "Download deployment plan"
+                  inputs:
+                    buildType: "current"
+                    artifactName: "deployment-plan"
+                    targetPath: $(System.DefaultWorkingDirectory)/terraform
+                # Download the Google service account key file.
+                - task: DownloadSecureFile@1
+                  name: authkey
+                  displayName: "Download service account file to authenticate to google cloud"
+                  inputs:
+                    secureFile: "iqz-terraform-azure-devops.json"
+                    retryCount: "2"
+
+                # Install Terraform v1.0.9
+                - task: TerraformInstaller@0
+                  displayName: "Install Terraform"
+                  inputs:
+                    terraformVersion: "1.0.9"
+                # We are specifying the GOOGLE_CREDENTIALS environment variable with the path to the downloaded
+                # service account JSON key file. This will be used by both the GCS backend for Terraform as well
+                # as the Google provider in the Terraform files. If we wish to specify a different service
+                # account for the GCS backend and the Google provider, we must use GOOGLE_BACKEND_CREDENTIALS for
+                # the backend and GOOGLE_APPLICATION_CREDENTIALS for the provider.
+                #
+                # During init, only the backend is initialized.
+                - script: |
+                    terraform init \
+                    -backend-config=bucket=$BACKEND_BUCKET \
+                    -backend-config=prefix=$BACKEND_PREFIX \
+                    -backend-config=credentials=$GOOGLE_CREDENTIALS
+                  displayName: "Terraform - init"
+                  workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+                  env:
+                    BACKEND_BUCKET: $(tf_backend_bucket)
+                    BACKEND_PREFIX: $(tf_backend_prefix)
+                    GOOGLE_CREDENTIALS: $(authkey.secureFilePath)
+                # "Apply" the plan.
+                #
+                # During "apply", the Google provider authentication will be used.
+                - script: |
+                    terraform apply tfplan
+                  workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+                  displayName: "Terraform - apply"
+                  env:
+                    GOOGLE_CREDENTIALS: $(authkey.secureFilePath)

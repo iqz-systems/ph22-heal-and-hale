@@ -1,0 +1,40 @@
+// font imports
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&display=swap');
+
+// default config
+$primary: #46ABFA;
+$family-primary: 'Rubik', sans-serif;
+$family-secondary: 'Roboto', sans-serif;
+$family-code: 'Open Sans', sans-serif;
+$body-color: #FFFFFF;
+$font-color: #FFFFFF;
+$link: $font-color;
+$link-hover: $font-color;
+$button-hover-color: #363636;
+
+// navbar styles
+$navbar-background-color: #000000;
+$navbar-height: 6rem;
+$navbar-padding-horizontal: 1rem;
+
+
+// footer styles
+$footer-background-color: #000000;
+
+// table styles
+$table-color: #FFFFFF;
+$table-background-color: #131E2F;
+$table-cell-border: 0;
+
+// toaster styles
+$toastify-color-light: #243d66;
+
+// modal styles
+$modal-card-head-background-color: #FFFFFF;
+$modal-card-head-border-bottom: 0;
+$modal-card-foot-border-top: 0;
+
+// slider styles
+$slider-thumb-background: #9CA5FF;
+$slider-thumb-border: 1px solid #6f75b9;

@@ -1,0 +1,11 @@
+.gitignore
+.editorconfig
+README.md
+cypress/
+cypress.json
+tslint.json
+azure-pipelines-1.yml
+azure-pipelines.yml
+tsconfig.json
+terraform/
+.azuredevops

@@ -1,0 +1,283 @@
+.domain-title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+li {
+    // border-radius: 1.5rem;
+    border-bottom: 5px solid #47AEFF;
+    padding: 2rem;
+    background-color: #131E2F;
+    height: 100%;
+}
+
+li p {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.card-grid {
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 80%;
+    margin: auto;
+}
+.box{
+    box-shadow:none;
+}
+.image-container {
+    width: fit-content;
+    margin: auto;
+    // height: 130px;
+}
+
+@media only screen and (min-width: 750px) and (max-width: 1300px) {
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .card-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+.Hackathon.column{
+    color:black;
+}
+
+.bottomright {
+    position: fixed;
+    display: flex;
+    bottom: 1rem;
+    right: 16px;
+    z-index: 10;
+    .chatIcon {
+        height: 70px;
+        width: 70px;
+        background-size: contain;
+        background-position: 50%;
+        background-image: url(/assets/images/hackathon-bluebird-logo.png);
+        background-repeat: no-repeat;
+        cursor: pointer;
+    }
+    .helloText {
+        padding: 10px 15px;
+        font-size: 18px;
+        background-color: #ffffff;
+        color: #333333;
+        margin: 0.75rem;
+        border-radius: 23px;
+        border: 1px solid #cccccc63
+    }
+  }
+
+//   .page-background{
+//     background-color:white;
+//   }
+  .firstArticle{
+    margin-top: 2rem !important;
+    margin-bottom: 0 !important;
+  }
+  .tile.is-vertical > .tile.is-child.firstArticle:not(:last-child){
+    margin-top: 2rem !important;
+    margin-bottom: 0 !important;
+  }
+  .pegaSection{
+    padding: 5rem;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+
+  .bd-snippet-code.bd-is-more.bd-is-more-clipped .highlight::before {
+    background: linear-gradient(0deg,var(--hl-background),transparent);
+    bottom: 0;
+    content: "";
+    display: block;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.bd-copy, .bd-show {
+    background-color: var(--hl-color);
+    border: none;
+    border-radius: 0.5em!important;
+    color: var(--hl-background);
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.bd-show {
+    bottom: 4.75em;
+    height: 2.5em;
+    left: calc(50% - 4.5em);
+    padding: 0;
+    position: absolute;
+    width: 9em;
+    z-index: 1;
+}
+
+.bd-snippet {
+    --snippet-spacing: 1.5rem;
+    height: calc(35 * var(--snippet-spacing));
+    position: relative;
+    background-image: "url(/images/hackathonhow-it-works.png)";
+    background-repeat: no-repeat;
+    background-size: contain;
+    max-width: 60%;
+    margin: 0 auto;
+}
+.hackHero{
+    color: #fff;
+    background-color: #ffffffab !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* display: flex; */
+    background-attachment: fixed;
+    justify-content: center;
+    background-position: center center;
+     background-image: url(/assets/images/hackathonhero.png);
+}
+.hackHero .navbar {
+    background: #ffffffab;
+    // opacity: 0.7;
+}
+.hackathonHelpImage
+{
+    border-radius: 2rem 2rem 0 0;
+}
+
+.hero-background {
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+.topBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.hackhero-content {
+    text-align: center;
+    width: 50%;
+    margin: 15% auto 0;
+    .herohack-highlighted {
+        color: #00B6A7;
+        background-color: #005BBA;
+    }
+    h1 {
+        color: #005BBA;
+        font-size: 48px;
+        font-weight: bold;
+        font-family: 'Poppins';
+    }
+    p {
+        color: #000;
+        font-size: 20px;
+        font-weight: normal;
+        font-family: "Roboto", sans-serif;
+    }
+}
+
+.hackJoinUS {
+    position: relative;
+    div {
+        background-color: #005bba;
+        width: 75%;
+        margin: auto;
+        padding: 2.5rem 4rem;
+        position: absolute;
+        left: 12%;
+        bottom: -4rem;
+        border-radius: 20px;
+        display: flex;
+        justify-content: space-around;
+        p {
+            font-size: 32px;
+        }
+        span {
+            padding: 1rem; 
+            border: 1px solid #00B6A7;
+            color: #00B6A7;
+            border-radius: 10px;
+        }
+    }
+}
+
+.p5 {
+    padding: 5rem
+}
+.hackAboutUs {
+    position: relative;
+    .contentContainer {
+        width: 80%;
+    }
+}
+.hackSectionTitle {
+    color: #00B6A7;
+    font-size: 18px;
+    font-family: 'Poppins' !important;
+    font-weight: 500;
+}
+.hackTitle {
+    color: #005BBA;
+    font-family: 'Poppins';
+    font-size: 2.25rem !important;
+}
+.hackSectionPrimBtn {
+    background-color: #005BBA;
+    color: #fff;
+}
+
+.hackSectionSecBtn {
+    color: #00B6A7;
+    border: 1px solid #00B6A7;
+    background-color: #fff;
+}
+
+.hackSolutions {
+    padding: 5rem 5rem 0;
+}
+.hackCardSection {
+    .card {
+        border-radius: 2rem;
+    }
+}
+.hackVideoSection {
+    background-color: #001843;
+    padding-top: 3rem;
+    .titleContainer {
+        text-align: center;
+        width: 30%;
+        margin: 0 auto 3rem;
+        .videoSecTitle {
+            color: #00B6A7;
+            font-size: 18px;
+            font-family: 'Poppins';
+        }
+        .description {
+            font-size: 1.75rem;
+            font-family: 'Poppins';
+            font-weight: bold;
+        }
+    }
+}
+
+.hackVoluteerSection {
+    margin-top: 100px;
+    margin-bottom: 2rem;
+}
+.hackgrid {
+    font-family: 'Poppins';
+    font-weight: 500;
+    text-align: center;
+}
+
+#pegaChatWidget{
+    width: 500px !important;
+    padding-right: 4rem;
+}

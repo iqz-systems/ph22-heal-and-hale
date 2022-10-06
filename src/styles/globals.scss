@@ -1,0 +1,27 @@
+@import "./variables.scss";
+
+// body {
+//     background-color: #09101B;
+// }
+
+.page-background {
+    background-color: #09101B;
+}
+
+.content-spacing {
+    padding-top: 4rem !important;
+}
+
+.grey-background {
+    background-color: #243d66;
+}
+.sunlife-container p, .sunlife-container .label {
+    color: #424242;
+}
+.sunlife-container .button {
+    background-color: #FFCB05;
+    color: #004C6C
+}
+
+@import "bulma/bulma.sass";
+@import "node_modules/bulma-slider/src/sass/index.sass";

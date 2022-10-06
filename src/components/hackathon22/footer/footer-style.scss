@@ -1,0 +1,43 @@
+span {
+    margin-right: 3rem;
+}
+
+.social-icons {
+    float: right;
+}
+
+@media only screen and (max-width: 750px) {
+    span {
+        display: block;
+        margin-top: 2rem;
+    }
+
+    .social-icons {
+        float: left;
+        display: block;
+    }
+}
+
+.hackfooter {
+    padding: 0;
+    padding-top: 3rem;
+}
+.hackfooterContainer {
+    max-width: 75%;
+    margin: 0 auto;
+}
+.hackFlexContainer {
+    display: flex;
+    justify-content: space-between;
+}
+.hackCopyRight {
+    text-align: center;
+    color: #525252;
+}
+.padding5 {
+    padding: 5rem 0 2rem 0;
+}
+
+.paddingbottom3{
+    padding-bottom: 3rem;
+}

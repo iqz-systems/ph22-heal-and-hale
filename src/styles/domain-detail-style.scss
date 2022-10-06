@@ -1,0 +1,50 @@
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 5rem 0;
+}
+
+.topic {
+    color: #9CA5FF;
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.sub-topic {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.domain-image {
+    border-radius: 0.75rem;
+}
+
+.bottom-topic {
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.bottom-first-column {
+    background-color: #9CA5FF;
+    border-radius: 2rem;
+    padding: 2rem;
+}
+
+.bottom-container {
+    margin: 5rem 0 0 0;                                                                                                                                                                                                                                                                                                                                                                                             
+}
+
+.bottom-second-column {
+    background-color: #131E2F;
+    border-radius: 2rem;
+    padding: 2rem;
+}
+
+.secondary-button {
+    background-color: #131E2F;
+    color: #FFFFFF;
+}
+
+.secondary-button:hover, .secondary-button:active, .secondary-button:focus {
+    color: #FFFFFF;
+}

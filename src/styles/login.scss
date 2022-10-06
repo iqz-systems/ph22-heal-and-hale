@@ -1,0 +1,37 @@
+.login-container {
+    background-color: #131E2F;
+    border-radius: 3rem;
+    justify-content: center;
+    padding: 5rem;
+}
+
+.sunlife-container.login-container {
+    background-color: #F4F7F6;
+}
+
+.submit-button {
+    background-color: #9CA5FF !important;
+}
+
+.select::after {
+    border-color: #9CA5FF !important;
+}
+
+.select:hover::after {
+    border-color: #131E2F !important;
+}
+
+.has-full-width {
+    width: 100%;
+}
+.sunlife-login {
+    padding-bottom: 4rem;
+}
+.iqz-login
+{
+    padding-bottom: 3rem !important;
+    background-color: #09101B;
+}
+.iqz-login-text {
+    color: white !important;
+}
