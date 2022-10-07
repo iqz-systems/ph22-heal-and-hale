@@ -1,5 +1,6 @@
 ﻿
 
+
 <h1 align="center">
 <a href="https://devpost.com/software/heal-hale"><img src="https://iqzplus.com/images/hackathonHealAndHale.svg" alt="HealandHale" width="200"></a>
 </h1>
@@ -44,11 +45,11 @@ Here are the features implemented in the application and details about the Pega 
 
 # Clone this repository
 
-$ git clone https://github.com/IQZ/HealandHale
+$ git clone https://github.com/iqz-systems/ph22-heal-and-hale
 
 # Go into the repository
 
-$ cd HealandHale
+$ cd ph22-heal-and-hale
 
 # Install dependencies
 
@@ -66,19 +67,25 @@ $ npm start
 
 #### Pega marketing application
 
-[see this guide](https://academy.pega.com/topic/importing-application-archive/v1) for importing application into Pega platform. User CDH.Zip file to upload.
+[see this guide](https://academy.pega.com/topic/importing-application-archive/v1) for importing application into Pega platform. User `CDH-Rules.jar` and `CDH-Context.jar` files to upload.
 
 #### Pega platform application
 
-[see this guide](https://academy.pega.com/topic/importing-application-archive/v1) for importing application into Pega platform. User HnH.Zip file to upload.
+[see this guide](https://academy.pega.com/topic/importing-application-archive/v1) for importing application into Pega platform. User HnH.zip file to upload.
 
 ## Configurations
 **Pega Platform Application**
 * Configure DSS setting for *`HnHInt•CDHEnvironmentURL`* as url of the  installed *`Pega marketing application`*
 * Digital messaging manager credentials are unique to each environment. Configure the associated key/secret for your installed Pega Platform environment.
 
-
+**Pega Marketing Application**
+* Enable multi-channel campaign for feedback collection, 
+`Strategy:  SendFeedback, Audience:  SendFeedback
+ Engagement: Daily`.
+ * Run the data flow for response collection 
+ `Rule Name:  ProcessResponseStream,
+Applies To:  PegaMKT-Data-Response`. Make sure in Real Time Data flow landing page data flow is in in-progress status.
 ## User guide
 
-Refer [this guide](https://github.com/IQZ/Healandhale/userguide.pdf) for application flow
+Refer [this guide](https://github.com/iqz-systems/ph22-heal-and-hale/userguide.pdf) for application flow
 
