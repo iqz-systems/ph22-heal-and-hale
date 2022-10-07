@@ -67,7 +67,7 @@ $ npm start
 
 #### Pega marketing application
 
-[see this guide](https://academy.pega.com/topic/importing-application-archive/v1) for importing application into Pega platform. User `CDH-Rules.jar` and `CDH-Context.jar` files to upload.
+[see this guide](https://academy.pega.com/topic/importing-application-archive/v1) for importing application into Pega platform. User `CDH-Rules.jar` and `CDH-ContextRules.jar` files to upload.
 
 #### Pega platform application
 
@@ -75,7 +75,7 @@ $ npm start
 
 ## Configurations
 **Pega Platform Application**
-* Configure DSS setting for *`HnHInt•CDHEnvironmentURL`* as url of the  installed *`Pega marketing application`*
+* **Mandatory** Configure DSS setting for *`HnHInt•CDHEnvironmentURL`* as url of the  installed *`Pega marketing application`*
 * Digital messaging manager credentials are unique to each environment. Configure the associated key/secret for your installed Pega Platform environment.
 
 **Pega Marketing Application**
@@ -87,5 +87,5 @@ $ npm start
 Applies To:  PegaMKT-Data-Response`. Make sure in Real Time Data flow landing page data flow is in in-progress status.
 ## User guide
 
-Refer [this guide](https://github.com/iqz-systems/ph22-heal-and-hale/userguide.pdf) for application flow
+Refer [this guide](https://github.com/iqz-systems/ph22-heal-and-hale/blob/main/HealandHaleUserGuide.pdf) for application flow
 
